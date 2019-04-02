@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navGraph"
+    app:startDestination="@+id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="net.alexandroid.teamco.LoginFragment"
+        android:label="Login Fragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/navGraph" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="net.alexandroid.teamco.HomeFragment"
+        android:label="Home Fragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_createEventFragment"
+            app:destination="@id/createEventFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_editEventFragment"
+            app:destination="@id/editEventFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_eventFragment"
+            app:destination="@id/eventFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createEventFragment"
+        android:name="net.alexandroid.teamco.CreateEventFragment"
+        android:label="Create Event Fragment"
+        tools:layout="@layout/fragment_create_event">
+        <action
+            android:id="@+id/action_createEventFragment_to_eventCreatedFragment"
+            app:destination="@id/eventCreatedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventCreatedFragment"
+        android:name="net.alexandroid.teamco.EventCreatedFragment"
+        android:label="Fragment Event Created"
+        tools:layout="@layout/fragment_event_created">
+        <action
+            android:id="@+id/action_eventCreatedFragment_to_editEventFragment"
+            app:destination="@id/editEventFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editEventFragment"
+        android:name="net.alexandroid.teamco.EditEventFragment"
+        android:label="Fragment Edit Event"
+        tools:layout="@layout/fragment_edit_event">
+        <action
+            android:id="@+id/action_editEventFragment_to_teamListFragment"
+            app:destination="@id/teamListFragment" />
+        <action
+            android:id="@+id/action_editEventFragment_to_userListFragment"
+            app:destination="@id/userListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamListFragment"
+        android:name="net.alexandroid.teamco.TeamListFragment"
+        android:label="Fragment Team List"
+        tools:layout="@layout/fragment_team_list">
+        <action
+            android:id="@+id/action_teamListFragment_to_teamInfoFragment"
+            app:destination="@id/teamInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="net.alexandroid.teamco.EventFragment"
+        android:label="Fragment Event"
+        tools:layout="@layout/fragment_event">
+        <action
+            android:id="@+id/action_eventFragment_to_teamListFragment"
+            app:destination="@id/teamListFragment" />
+        <action
+            android:id="@+id/action_eventFragment_to_createTeamFragment"
+            app:destination="@id/createTeamFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userListFragment"
+        android:name="net.alexandroid.teamco.UserListFragment"
+        android:label="fragment_user_list"
+        tools:layout="@layout/fragment_user_list" />
+    <fragment
+        android:id="@+id/teamInfoFragment"
+        android:name="net.alexandroid.teamco.TeamInfoFragment"
+        android:label="fragment_team_info"
+        tools:layout="@layout/fragment_team_info" />
+    <fragment
+        android:id="@+id/createTeamFragment"
+        android:name="net.alexandroid.teamco.CreateTeamFragment"
+        android:label="fragment_create_team"
+        tools:layout="@layout/fragment_create_team">
+        <action
+            android:id="@+id/action_createTeamFragment_to_teamInfoFragment"
+            app:destination="@id/teamInfoFragment" />
+    </fragment>
+</navigation>
