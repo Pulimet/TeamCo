@@ -38,7 +38,9 @@
         tools:layout="@layout/fragment_create_event">
         <action
             android:id="@+id/action_createEventFragment_to_eventCreatedFragment"
-            app:destination="@id/eventCreatedFragment" />
+            app:destination="@id/eventCreatedFragment"
+            app:popUpTo="@+id/createEventFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/eventCreatedFragment"
@@ -47,7 +49,9 @@
         tools:layout="@layout/fragment_event_created">
         <action
             android:id="@+id/action_eventCreatedFragment_to_editEventFragment"
-            app:destination="@id/editEventFragment" />
+            app:destination="@id/editEventFragment"
+            app:popUpTo="@+id/eventCreatedFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/editEventFragment"
@@ -85,20 +89,22 @@
     <fragment
         android:id="@+id/userListFragment"
         android:name="net.alexandroid.teamco.UserListFragment"
-        android:label="fragment_user_list"
+        android:label="Fragment User List"
         tools:layout="@layout/fragment_user_list" />
     <fragment
         android:id="@+id/teamInfoFragment"
         android:name="net.alexandroid.teamco.TeamInfoFragment"
-        android:label="fragment_team_info"
+        android:label="Fragment Team Info"
         tools:layout="@layout/fragment_team_info" />
     <fragment
         android:id="@+id/createTeamFragment"
         android:name="net.alexandroid.teamco.CreateTeamFragment"
-        android:label="fragment_create_team"
+        android:label="Fragment Create Team"
         tools:layout="@layout/fragment_create_team">
         <action
             android:id="@+id/action_createTeamFragment_to_teamInfoFragment"
-            app:destination="@id/teamInfoFragment" />
+            app:destination="@id/teamInfoFragment"
+            app:popUpTo="@+id/createTeamFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
