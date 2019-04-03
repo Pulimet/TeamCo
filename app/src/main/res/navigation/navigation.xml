@@ -13,6 +13,8 @@
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_down"
+            app:exitAnim="@anim/slide_out_up"
             app:popUpToInclusive="true"
             app:popUpTo="@+id/navGraph" />
     </fragment>
@@ -23,10 +25,18 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_createEventFragment"
-            app:destination="@id/createEventFragment" />
+            app:destination="@id/createEventFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_homeFragment_to_editEventFragment"
-            app:destination="@id/editEventFragment" />
+            app:enterAnim="@anim/scale_rotate_in"
+            app:exitAnim="@anim/fade_out"
+            app:destination="@id/editEventFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_homeFragment_to_eventFragment"
             app:destination="@id/eventFragment" />
