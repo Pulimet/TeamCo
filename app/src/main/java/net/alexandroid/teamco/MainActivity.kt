@@ -2,7 +2,9 @@ package net.alexandroid.teamco
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -20,21 +22,37 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setToolBarAndNavigation()
+    }
+
+    private fun setToolBarAndNavigation() {
         setSupportActionBar(toolBar)
         navController = findNavController(R.id.myNavHostFragment)
 
         // Update action bar to reflect navigation
-        NavigationUI.setupActionBarWithNavController(
-                this,
-                navController,
+        // The title in the action bar will automatically be updated when the destination changes
+        setupActionBarWithNavController(this, navController, drawerLayout)
+
+        // This will call #onNavDestinationSelected(...)} when a menu item is selected.
+        setupWithNavController(navView, navController)
+
+        // Set Login and Home fragments as parent fragments
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.homeFragment),
                 drawerLayout)
 
-        val appBarConfiguration = AppBarConfiguration(
-                setOf(R.id.loginFragment, R.id.homeFragment),
-                drawerLayout)
-        NavigationUI.setupWithNavController(toolBar, navController, appBarConfiguration)
+        setupWithNavController(toolBar, navController, appBarConfiguration)
 
+        //Hide hamburger icon at LoginFragment
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
+        //Lock drawer everywhere except HomeFragment
+        navController.addOnDestinationChangedListener { navController, destination, arguments ->
+            if (destination.id == R.id.homeFragment) {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            } else {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            }
+        }
     }
 
     override fun onSupportNavigateUp() = NavigationUI.navigateUp(navController, drawerLayout)
