@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="net.alexandroid.teamco.LoginFragment"
+        android:name="net.alexandroid.teamco.ui.login.LoginFragment"
         android:label="Login Fragment"
         tools:layout="@layout/fragment_login">
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="net.alexandroid.teamco.HomeFragment"
+        android:name="net.alexandroid.teamco.ui.home.HomeFragment"
         android:label="Home Fragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/createEventFragment"
-        android:name="net.alexandroid.teamco.CreateEventFragment"
+        android:name="net.alexandroid.teamco.ui.event.CreateEventFragment"
         android:label="Create Event Fragment"
         tools:layout="@layout/fragment_create_event">
         <action
@@ -54,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/eventCreatedFragment"
-        android:name="net.alexandroid.teamco.EventCreatedFragment"
+        android:name="net.alexandroid.teamco.ui.event.EventCreatedFragment"
         android:label="Fragment Event Created"
         tools:layout="@layout/fragment_event_created">
         <action
@@ -65,7 +65,7 @@
     </fragment>
     <fragment
         android:id="@+id/editEventFragment"
-        android:name="net.alexandroid.teamco.EditEventFragment"
+        android:name="net.alexandroid.teamco.ui.event.EditEventFragment"
         android:label="Fragment Edit Event"
         tools:layout="@layout/fragment_edit_event">
         <action
@@ -77,7 +77,7 @@
     </fragment>
     <fragment
         android:id="@+id/teamListFragment"
-        android:name="net.alexandroid.teamco.TeamListFragment"
+        android:name="net.alexandroid.teamco.ui.team.TeamListFragment"
         android:label="Fragment Team List"
         tools:layout="@layout/fragment_team_list">
         <action
@@ -86,7 +86,7 @@
     </fragment>
     <fragment
         android:id="@+id/eventFragment"
-        android:name="net.alexandroid.teamco.EventFragment"
+        android:name="net.alexandroid.teamco.ui.event.EventFragment"
         android:label="Fragment Event"
         tools:layout="@layout/fragment_event">
         <action
@@ -98,17 +98,17 @@
     </fragment>
     <fragment
         android:id="@+id/userListFragment"
-        android:name="net.alexandroid.teamco.UserListFragment"
+        android:name="net.alexandroid.teamco.ui.users.UserListFragment"
         android:label="Fragment User List"
         tools:layout="@layout/fragment_user_list" />
     <fragment
         android:id="@+id/teamInfoFragment"
-        android:name="net.alexandroid.teamco.TeamInfoFragment"
+        android:name="net.alexandroid.teamco.ui.team.TeamInfoFragment"
         android:label="Fragment Team Info"
         tools:layout="@layout/fragment_team_info" />
     <fragment
         android:id="@+id/createTeamFragment"
-        android:name="net.alexandroid.teamco.CreateTeamFragment"
+        android:name="net.alexandroid.teamco.ui.team.CreateTeamFragment"
         android:label="Fragment Create Team"
         tools:layout="@layout/fragment_create_team">
         <action
