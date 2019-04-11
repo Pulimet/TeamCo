@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "587419487459",
+    "firebase_url": "https://teamco-alex.firebaseio.com",
+    "project_id": "teamco-alex",
+    "storage_bucket": "teamco-alex.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587419487459:android:baf1c6994d0c14b8",
+        "android_client_info": {
+          "package_name": "net.alexandroid.teamco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587419487459-kvm0r51hnnhijrm2498d2m9m045djm6n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.alexandroid.teamco",
+            "certificate_hash": "993aaedeefe4409b6d32228aeb21eed4165b5599"
+          }
+        },
+        {
+          "client_id": "587419487459-c2unfdr7sgbi1d4vr1sas2lqcvhf7367.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMjSZR3sukLSOXQUsZubrAo3veL6hs3tc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587419487459-c2unfdr7sgbi1d4vr1sas2lqcvhf7367.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
