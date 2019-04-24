@@ -1,29 +1,40 @@
 package net.alexandroid.teamco.ui.login
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.fragment_login.*
-import net.alexandroid.teamco.R
+
 
 class LoginFragment : Fragment() {
 
+    private val REQUEST_CODE_SIGN_IN = 0
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        auth = FirebaseAuth.getInstance()
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("587419487459-c2unfdr7sgbi1d4vr1sas2lqcvhf7367.apps.googleusercontent.com")
             .requestEmail()
             .build()
         activity?.let { mGoogleSignInClient = GoogleSignIn.getClient(it, gso) }
@@ -31,9 +42,8 @@ class LoginFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        // if the user is already signed in the GoogleSignInAccount will be non-null.
-        val account = GoogleSignIn.getLastSignedInAccount(context)
-        account?.let {
+        auth.currentUser?.apply {
+            Log.d("QAZ", "FirebaseAuth currentUser: $displayName")
             // TODO Notify ViewModel -> user is logged in.
             // TODO Remove the code below when previous TODO are done
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
@@ -41,14 +51,62 @@ class LoginFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        return inflater.inflate(net.alexandroid.teamco.R.layout.fragment_login, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        signInButton.setSize(SignInButton.SIZE_WIDE)
+        signInButton.setOnClickListener {
+            val signInIntent = mGoogleSignInClient.signInIntent
+            startActivityForResult(signInIntent, REQUEST_CODE_SIGN_IN)
+        }
+
+        // TODO Remove button for tests below
         btnOpenHome.setOnClickListener {
-            findNavController()
-                .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        }
+    }
+
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account = completedTask.getResult(ApiException::class.java)
+            Log.d("QAZ", "Signed in, display name: " + account?.displayName)
+            // Signed in successfully, show authenticated UI.
+            firebaseAuthWithGoogle(account!!)
+        } catch (e: ApiException) {
+            // TODO
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.e("QAZ", "signInResult:failed code=" + e.statusCode)
+        }
+
+    }
+
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        auth.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val user = auth.currentUser
+                Log.d("QAZ", "firebaseAuth signInWithCredential:success, display name" + user?.displayName)
+                // TODO Notify ViewModel -> user is logged in.
+                // TODO Remove the code below when previous TODO are done
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+            } else {
+                //TODO
+                Log.w("QAZ", "firebaseAuth signInWithCredential:failure", task.exception)
+            }
+        }
+    }
+
 }
+
