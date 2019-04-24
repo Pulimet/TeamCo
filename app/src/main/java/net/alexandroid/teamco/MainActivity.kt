@@ -1,18 +1,21 @@
 package net.alexandroid.teamco
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
-import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
+import net.alexandroid.teamco.ui.login.LoginFragmentDirections
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,8 +40,10 @@ class MainActivity : AppCompatActivity() {
         setupWithNavController(navView, navController)
 
         // Set Login and Home fragments as parent fragments
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.homeFragment),
-                drawerLayout)
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.loginFragment, R.id.homeFragment),
+            drawerLayout
+        )
 
         setupWithNavController(toolBar, navController, appBarConfiguration)
 
