@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.fragment_login.*
+import androidx.annotation.NonNull
+import com.google.android.gms.tasks.OnCompleteListener
 
 
 class LoginFragment : Fragment() {
@@ -30,7 +32,6 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         auth = FirebaseAuth.getInstance()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -38,6 +39,8 @@ class LoginFragment : Fragment() {
             .requestEmail()
             .build()
         activity?.let { mGoogleSignInClient = GoogleSignIn.getClient(it, gso) }
+
+
     }
 
     override fun onStart() {
@@ -46,7 +49,12 @@ class LoginFragment : Fragment() {
             Log.d("QAZ", "FirebaseAuth currentUser: $displayName")
             // TODO Notify ViewModel -> user is logged in.
             // TODO Remove the code below when previous TODO are done
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+            //findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+        }
+
+        val account = GoogleSignIn.getLastSignedInAccount(activity)
+        account?.apply {
+            Log.d("QAZ", "GoogleSignIn currentUser: $displayName")
         }
     }
 
@@ -93,6 +101,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        // TODO Show progress dialog
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -105,7 +114,22 @@ class LoginFragment : Fragment() {
                 //TODO
                 Log.w("QAZ", "firebaseAuth signInWithCredential:failure", task.exception)
             }
+            // TODO Hide progress dialog
         }
+    }
+
+    private fun signOut() {
+        FirebaseAuth.getInstance().signOut()
+        mGoogleSignInClient.signOut().addOnCompleteListener {
+            Log.d("QAZ", "GoogleSignIn signed out")
+        }
+    }
+
+    private fun revokeAccess() {
+        mGoogleSignInClient.revokeAccess()
+        /*.addOnCompleteListener(this, OnCompleteListener<Void> {
+            // ...
+        })*/
     }
 
 }
