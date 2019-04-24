@@ -19,8 +19,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.fragment_login.*
-import androidx.annotation.NonNull
-import com.google.android.gms.tasks.OnCompleteListener
+import net.alexandroid.teamco.R
 
 
 class LoginFragment : Fragment() {
@@ -35,12 +34,10 @@ class LoginFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("587419487459-c2unfdr7sgbi1d4vr1sas2lqcvhf7367.apps.googleusercontent.com")
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         activity?.let { mGoogleSignInClient = GoogleSignIn.getClient(it, gso) }
-
-
     }
 
     override fun onStart() {
@@ -49,9 +46,10 @@ class LoginFragment : Fragment() {
             Log.d("QAZ", "FirebaseAuth currentUser: $displayName")
             // TODO Notify ViewModel -> user is logged in.
             // TODO Remove the code below when previous TODO are done
-            //findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
         }
 
+        // For tests
         val account = GoogleSignIn.getLastSignedInAccount(activity)
         account?.apply {
             Log.d("QAZ", "GoogleSignIn currentUser: $displayName")
@@ -59,7 +57,7 @@ class LoginFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View? {
-        return inflater.inflate(net.alexandroid.teamco.R.layout.fragment_login, container, false)
+        return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
