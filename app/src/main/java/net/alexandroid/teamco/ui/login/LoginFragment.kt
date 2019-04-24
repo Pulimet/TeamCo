@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_login.*
-import net.alexandroid.teamco.LoginFragmentDirections
 import net.alexandroid.teamco.R
 
 class LoginFragment : Fragment() {
