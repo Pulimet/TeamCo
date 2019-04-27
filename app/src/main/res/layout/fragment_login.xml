@@ -17,23 +17,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-    <Button
-            android:id="@+id/btnOpenHome"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Go To Home Fragment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"/>
 
     <com.google.android.gms.common.SignInButton
             android:id="@+id/signInButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnOpenHome"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+    <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@android:style/Widget.Holo.ProgressBar.Large"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:progress="70"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

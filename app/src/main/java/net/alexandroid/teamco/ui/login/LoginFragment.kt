@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -21,20 +21,20 @@ import net.alexandroid.teamco.R
 import net.alexandroid.teamco.ui.base.BaseFragment
 import net.alexandroid.utils.mylog.MyLog
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.androidx.viewmodel.ext.koin.viewModel
 
 class LoginFragment : BaseFragment() {
 
+    @Suppress("PrivatePropertyName")
     private val REQUEST_CODE_SIGN_IN = 0
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var auth: FirebaseAuth
+
     private val loginViewModel: LoginViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
-
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -46,9 +46,7 @@ class LoginFragment : BaseFragment() {
         super.onStart()
         auth.currentUser?.apply {
             MyLog.d("FirebaseAuth currentUser: $displayName")
-            // TODO Notify ViewModel -> user is logged in.
-            // TODO Remove the code below when previous TODO are done
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+            loginViewModel.onUserLoggedIn()
         }
 
         // For tests
@@ -65,15 +63,19 @@ class LoginFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        loginViewModel.getProgressBar().observe(this, Observer {
+           progressBar.visibility = if (it) View.VISIBLE else View.GONE
+        })
+        loginViewModel.getNavigate().observe(this, Observer {navigateToHomeFragment()})
+
+        setGoogleSignInButton()
+    }
+
+    private fun setGoogleSignInButton() {
         signInButton.setSize(SignInButton.SIZE_WIDE)
         signInButton.setOnClickListener {
             val signInIntent = mGoogleSignInClient.signInIntent
             startActivityForResult(signInIntent, REQUEST_CODE_SIGN_IN)
-        }
-
-        // TODO Remove button for tests below
-        btnOpenHome.setOnClickListener {
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
         }
     }
 
@@ -89,8 +91,7 @@ class LoginFragment : BaseFragment() {
         try {
             val account = completedTask.getResult(ApiException::class.java)
             MyLog.d("Signed in, display name: " + account?.displayName)
-            // Signed in successfully, show authenticated UI.
-            firebaseAuthWithGoogle(account!!)
+            fireBaseAuthWithGoogle(account!!)
         } catch (e: ApiException) {
             // TODO
             // The ApiException status code indicates the detailed failure reason.
@@ -100,22 +101,25 @@ class LoginFragment : BaseFragment() {
 
     }
 
-    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
-        // TODO Show progress dialog
+    private fun fireBaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        loginViewModel.onStartFireBaseLogin()
+
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val user = auth.currentUser
                 MyLog.d("firebaseAuth signInWithCredential:success, display name" + user?.displayName)
-                // TODO Notify ViewModel -> user is logged in.
-                // TODO Remove the code below when previous TODO are done
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+                loginViewModel.onUserLoggedIn()
             } else {
                 //TODO
                 MyLog.w("firebaseAuth signInWithCredential:failure: " + task.exception)
             }
-            // TODO Hide progress dialog
+            loginViewModel.onFinishedFireBaseLogin()
         }
+    }
+
+    private fun navigateToHomeFragment() {
+        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
     }
 
     private fun signOut() {
