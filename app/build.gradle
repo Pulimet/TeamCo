@@ -44,6 +44,10 @@ dependencies {
     // Google Play services
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
 
+    // AlexAndroid
+    implementation 'net.alexandroid.utils:mylog:1.2'
+    implementation 'net.alexandroid.utils:shpref:1.6'
+
     // Tests
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
