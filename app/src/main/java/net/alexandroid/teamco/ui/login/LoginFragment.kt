@@ -3,7 +3,6 @@ package net.alexandroid.teamco.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.fragment_login.*
 import net.alexandroid.teamco.R
+import net.alexandroid.utils.mylog.MyLog
 
 
 class LoginFragment : Fragment() {
@@ -43,7 +43,7 @@ class LoginFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         auth.currentUser?.apply {
-            Log.d("QAZ", "FirebaseAuth currentUser: $displayName")
+            MyLog.d("FirebaseAuth currentUser: $displayName")
             // TODO Notify ViewModel -> user is logged in.
             // TODO Remove the code below when previous TODO are done
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
@@ -52,7 +52,7 @@ class LoginFragment : Fragment() {
         // For tests
         val account = GoogleSignIn.getLastSignedInAccount(activity)
         account?.apply {
-            Log.d("QAZ", "GoogleSignIn currentUser: $displayName")
+            MyLog.d("GoogleSignIn currentUser: $displayName")
         }
     }
 
@@ -86,14 +86,14 @@ class LoginFragment : Fragment() {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            Log.d("QAZ", "Signed in, display name: " + account?.displayName)
+            MyLog.d("Signed in, display name: " + account?.displayName)
             // Signed in successfully, show authenticated UI.
             firebaseAuthWithGoogle(account!!)
         } catch (e: ApiException) {
             // TODO
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.e("QAZ", "signInResult:failed code=" + e.statusCode)
+            MyLog.e("signInResult:failed code=" + e.statusCode)
         }
 
     }
@@ -104,13 +104,13 @@ class LoginFragment : Fragment() {
         auth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val user = auth.currentUser
-                Log.d("QAZ", "firebaseAuth signInWithCredential:success, display name" + user?.displayName)
+                MyLog.d("firebaseAuth signInWithCredential:success, display name" + user?.displayName)
                 // TODO Notify ViewModel -> user is logged in.
                 // TODO Remove the code below when previous TODO are done
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
             } else {
                 //TODO
-                Log.w("QAZ", "firebaseAuth signInWithCredential:failure", task.exception)
+                MyLog.w("firebaseAuth signInWithCredential:failure: " + task.exception)
             }
             // TODO Hide progress dialog
         }
@@ -119,7 +119,7 @@ class LoginFragment : Fragment() {
     private fun signOut() {
         FirebaseAuth.getInstance().signOut()
         mGoogleSignInClient.signOut().addOnCompleteListener {
-            Log.d("QAZ", "GoogleSignIn signed out")
+            MyLog.d("GoogleSignIn signed out")
         }
     }
 
