@@ -1,6 +1,5 @@
 package net.alexandroid.teamco.ui.login
 
-
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,7 +20,8 @@ import kotlinx.android.synthetic.main.fragment_login.*
 import net.alexandroid.teamco.R
 import net.alexandroid.teamco.ui.base.BaseFragment
 import net.alexandroid.utils.mylog.MyLog
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.koin.viewModel
 
 class LoginFragment : BaseFragment() {
 
@@ -29,6 +29,7 @@ class LoginFragment : BaseFragment() {
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var auth: FirebaseAuth
+    private val loginViewModel: LoginViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

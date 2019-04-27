@@ -1,5 +1,8 @@
 package net.alexandroid.teamco.di
 
+import net.alexandroid.teamco.ui.login.LoginViewModel
+import net.alexandroid.teamco.ui.main.MainViewModel
+import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
 /**
@@ -7,12 +10,14 @@ import org.koin.dsl.module.module
  */
 
 var appModule = module {
+
+    viewModel { MainViewModel() }
+    viewModel { LoginViewModel() }
 //    single { RemoteConfig() }
 //    single { GoogleTagManager(androidContext()) }
 //
 //    single { Gson() }
 //
 //    single<MainRepository> { MainRepositoryImpl(get()) }
-//    viewModel { MainViewModel(get()) }
 }
 
