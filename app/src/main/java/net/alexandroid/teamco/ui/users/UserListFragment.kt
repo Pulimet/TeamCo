@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import net.alexandroid.teamco.R
+import net.alexandroid.teamco.ui.base.BaseFragment
 
-class UserListFragment : Fragment() {
+class UserListFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_user_list, container, false)
     }

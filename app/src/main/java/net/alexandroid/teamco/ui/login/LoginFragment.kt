@@ -19,10 +19,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.fragment_login.*
 import net.alexandroid.teamco.R
+import net.alexandroid.teamco.ui.base.BaseFragment
 import net.alexandroid.utils.mylog.MyLog
 
 
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment() {
 
     private val REQUEST_CODE_SIGN_IN = 0
 

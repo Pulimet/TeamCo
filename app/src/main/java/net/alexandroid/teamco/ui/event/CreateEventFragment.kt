@@ -9,8 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_create_event.*
 import net.alexandroid.teamco.R
+import net.alexandroid.teamco.ui.base.BaseFragment
 
-class CreateEventFragment : Fragment() {
+class CreateEventFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_create_event, container, false)
     }
