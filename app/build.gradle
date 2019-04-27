@@ -57,6 +57,10 @@ dependencies {
     // Koin Android ViewModel feature
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.0"
+
     // Tests
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
